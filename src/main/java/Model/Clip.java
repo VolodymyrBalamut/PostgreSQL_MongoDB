@@ -9,6 +9,14 @@ public class Clip {
     private int performer_id;
     private int style_id;
 
+    public Clip(int id, String name, String url, int performer_id, int style_id) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.performer_id = performer_id;
+        this.style_id = style_id;
+    }
+
     public int getId() {
         return id;
     }

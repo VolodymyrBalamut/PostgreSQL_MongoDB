@@ -1,9 +1,14 @@
 package DAO;
+import Model.Clip;
+
 import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ClipDAO {
+public class ClipDAO implements IDAO<Clip> {
 
 
     public static Connection getConnection() throws Exception {
@@ -47,5 +52,104 @@ public class ClipDAO {
             System.out.println("Failed to make connection!");
             return null;
         }
+    }
+
+    @Override
+    public List<Clip> findAll() {
+        List<Clip> clips = new ArrayList<Clip>();
+
+        return null;
+    }
+
+    @Override
+    public List<Clip> findById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Clip> findByName(String name) {
+        return null;
+    }
+
+    @Override
+    public boolean insert(Clip obj){
+        //Get connection with DB
+        try (Connection conn = ClipDAO.getConnection()) {
+            //Prepared sql statement
+            PreparedStatement st = conn.prepareStatement(
+                    "Insert into clips " +
+                            "(name, url, performer_id, style_id) " +
+                            "values ( ?, ?, ?, ?)");
+
+            //Set values of parameters
+            //st.setInt(1, obj.getId());
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getUrl());
+            st.setInt(3, obj.getPerformer_id());
+            st.setInt(4, obj.getStyle_id());
+
+            //Execute query
+            st.executeUpdate();
+
+            //Close conn
+            conn.close();
+        }
+        catch(Exception ex){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean update(Clip obj) {
+        //Get connection with DB
+        try (Connection conn = ClipDAO.getConnection()) {
+            //Prepared sql statement
+            PreparedStatement st = conn.prepareStatement(
+                    "Update clips " +
+                            "Set name = ?, url =?, performer_id = ?, style_id = ? " +
+                            "Where id = ?");
+
+            //Set values of parameters
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getUrl());
+            st.setInt(3, obj.getPerformer_id());
+            st.setInt(4, obj.getStyle_id());
+            st.setInt(5, obj.getId());
+
+            //Execute query
+            st.executeUpdate();
+
+            //Close conn
+            conn.close();
+        }
+        catch(Exception ex){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean delete(Clip obj) {
+        //Get connection with DB
+        try (Connection conn = ClipDAO.getConnection()) {
+            //Prepared sql statement
+            PreparedStatement st = conn.prepareStatement(
+                    "Delete from clips " +
+                            "Where id = ?");
+
+            //Set values of parameters
+            st.setInt(1, obj.getId());
+
+            //Execute query
+            st.executeUpdate();
+
+            //Close conn
+            conn.close();
+        }
+        catch(Exception ex){
+            return false;
+        }
+        return true;
     }
 }
