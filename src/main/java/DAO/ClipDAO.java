@@ -1,10 +1,7 @@
 package DAO;
 import Model.Clip;
 
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,18 +54,100 @@ public class ClipDAO implements IDAO<Clip> {
     @Override
     public List<Clip> findAll() {
         List<Clip> clips = new ArrayList<Clip>();
+        //Get connection with DB
+        try (Connection conn = ClipDAO.getConnection()) {
+            //Prepared sql statement
+            PreparedStatement st = conn.prepareStatement(
+                    "Select * from clips ");
 
-        return null;
+            //Execute query
+            ResultSet rs = st.executeQuery();
+
+            Clip clip = null;
+            while (rs.next()) {
+                clip = new Clip(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5));
+                clips.add(clip);
+            }
+            rs.close();
+            conn.close();
+            return clips;
+        }
+        catch(Exception ex){
+            return null;
+        }
     }
 
     @Override
     public List<Clip> findById(int id) {
-        return null;
+        List<Clip> clips = new ArrayList<Clip>();
+        //Get connection with DB
+        try (Connection conn = ClipDAO.getConnection()) {
+            //Prepared sql statement
+            PreparedStatement st = conn.prepareStatement(
+                    "Select * from clips "+
+                        "Where id = ?");
+
+            //Set values of parameters
+            st.setInt(1, id);
+            //Execute query
+            ResultSet rs = st.executeQuery();
+
+            Clip clip = null;
+            while (rs.next()) {
+                clip = new Clip(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5));
+                clips.add(clip);
+            }
+            rs.close();
+            conn.close();
+            return clips;
+        }
+        catch(Exception ex){
+            return null;
+        }
     }
 
     @Override
     public List<Clip> findByName(String name) {
-        return null;
+        List<Clip> clips = new ArrayList<Clip>();
+        //Get connection with DB
+        try (Connection conn = ClipDAO.getConnection()) {
+            //Prepared sql statement
+            PreparedStatement st = conn.prepareStatement(
+                    "Select * from clips "+
+                            "Where name = ?");
+
+            //Set values of parameters
+            st.setString(1, name);
+            //Execute query
+            ResultSet rs = st.executeQuery();
+
+            Clip clip = null;
+            while (rs.next()) {
+                clip = new Clip(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5));
+                clips.add(clip);
+            }
+            rs.close();
+            conn.close();
+            return clips;
+        }
+        catch(Exception ex){
+            return null;
+        }
     }
 
     @Override
