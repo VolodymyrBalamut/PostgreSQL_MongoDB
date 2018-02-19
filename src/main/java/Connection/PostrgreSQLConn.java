@@ -9,10 +9,6 @@ import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 public class PostrgreSQLConn {
 
-    private static String url = "jdbc:postgresql://127.0.0.1:5432/MusicHub";
-    private static String owner = "postgres";
-    private static String root = "123";
-
     public static Connection getConnection() throws Exception {
         System.out.println("-------- PostgreSQL "
                 + "JDBC Connection Testing ------------");
@@ -38,9 +34,9 @@ public class PostrgreSQLConn {
         try {
 
             connection = DriverManager.getConnection(
-                    url,
-                    owner,
-                    root);
+                    PostgreSql.getUrl(),
+                    PostgreSql.getOwner(),
+                    PostgreSql.getRoot());
 
         } catch (SQLException e) {
 
