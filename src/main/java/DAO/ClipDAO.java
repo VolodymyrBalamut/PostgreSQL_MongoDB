@@ -4,58 +4,19 @@ import Model.Clip;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+
+
+import static Connection.PostrgreSQLConn.getConnection;
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 public class ClipDAO implements IDAO<Clip> {
-
-
-    public static Connection getConnection() throws Exception {
-        System.out.println("-------- PostgreSQL "
-                + "JDBC Connection Testing ------------");
-
-        try {
-
-            Class.forName("org.postgresql.Driver");
-
-        } catch (ClassNotFoundException e) {
-
-            System.out.println("Where is your PostgreSQL JDBC Driver? "
-                    + "Include in your library path!");
-            e.printStackTrace();
-            return null;
-        }
-
-        System.out.println("PostgreSQL JDBC Driver Registered!");
-
-        Connection connection = null;
-
-        try {
-
-            connection = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/MusicHub", "postgres",
-                    "123");
-
-        } catch (SQLException e) {
-
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
-            return null;
-
-        }
-
-        if (connection != null) {
-            System.out.println("You made it, take control your database now!");
-            return connection;
-        } else {
-            System.out.println("Failed to make connection!");
-            return null;
-        }
-    }
 
     @Override
     public List<Clip> findAll() {
         List<Clip> clips = new ArrayList<Clip>();
         //Get connection with DB
-        try (Connection conn = ClipDAO.getConnection()) {
+        try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
                     "Select * from clips ");
@@ -75,9 +36,15 @@ public class ClipDAO implements IDAO<Clip> {
             }
             rs.close();
             conn.close();
+            LOGGER.log(Level.INFO,"Method findAll() was executed successfully!");
             return clips;
         }
-        catch(Exception ex){
+        catch(SQLException sqlex){
+            LOGGER.log(Level.WARNING,"SQLException: ",sqlex);
+            return null;
+        }
+        catch (Exception ex){
+            LOGGER.log(Level.WARNING,"Exception: ",ex);
             return null;
         }
     }
@@ -86,7 +53,7 @@ public class ClipDAO implements IDAO<Clip> {
     public List<Clip> findById(int id) {
         List<Clip> clips = new ArrayList<Clip>();
         //Get connection with DB
-        try (Connection conn = ClipDAO.getConnection()) {
+        try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
                     "Select * from clips "+
@@ -109,9 +76,15 @@ public class ClipDAO implements IDAO<Clip> {
             }
             rs.close();
             conn.close();
+            LOGGER.log(Level.INFO,"Method findById() was executed successfully!");
             return clips;
         }
-        catch(Exception ex){
+        catch(SQLException sqlex){
+            LOGGER.log(Level.WARNING,"SQLException: ",sqlex);
+            return null;
+        }
+        catch (Exception ex){
+            LOGGER.log(Level.WARNING,"Exception: ",ex);
             return null;
         }
     }
@@ -120,7 +93,7 @@ public class ClipDAO implements IDAO<Clip> {
     public List<Clip> findByName(String name) {
         List<Clip> clips = new ArrayList<Clip>();
         //Get connection with DB
-        try (Connection conn = ClipDAO.getConnection()) {
+        try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
                     "Select * from clips "+
@@ -143,9 +116,15 @@ public class ClipDAO implements IDAO<Clip> {
             }
             rs.close();
             conn.close();
+            LOGGER.log(Level.INFO,"Method findByName() was executed successfully!");
             return clips;
         }
-        catch(Exception ex){
+        catch(SQLException sqlex){
+            LOGGER.log(Level.WARNING,"SQLException: ",sqlex);
+            return null;
+        }
+        catch (Exception ex){
+            LOGGER.log(Level.WARNING,"Exception: ",ex);
             return null;
         }
     }
@@ -153,7 +132,7 @@ public class ClipDAO implements IDAO<Clip> {
     @Override
     public boolean insert(Clip obj){
         //Get connection with DB
-        try (Connection conn = ClipDAO.getConnection()) {
+        try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
                     "Insert into clips " +
@@ -173,16 +152,22 @@ public class ClipDAO implements IDAO<Clip> {
             //Close conn
             conn.close();
         }
-        catch(Exception ex){
+        catch(SQLException sqlex){
+            LOGGER.log(Level.WARNING,"SQLException: ",sqlex);
             return false;
         }
+        catch (Exception ex){
+            LOGGER.log(Level.WARNING,"Exception: ",ex);
+            return false;
+        }
+        LOGGER.log(Level.INFO,"Method insert() was executed successfully!");
         return true;
     }
 
     @Override
     public boolean update(Clip obj) {
         //Get connection with DB
-        try (Connection conn = ClipDAO.getConnection()) {
+        try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
                     "Update clips " +
@@ -202,16 +187,22 @@ public class ClipDAO implements IDAO<Clip> {
             //Close conn
             conn.close();
         }
-        catch(Exception ex){
+        catch(SQLException sqlex){
+            LOGGER.log(Level.WARNING,"SQLException: ",sqlex);
             return false;
         }
+        catch (Exception ex){
+            LOGGER.log(Level.WARNING,"Exception: ",ex);
+            return false;
+        }
+        LOGGER.log(Level.INFO,"Method update() was executed successfully!");
         return true;
     }
 
     @Override
     public boolean delete(Clip obj) {
         //Get connection with DB
-        try (Connection conn = ClipDAO.getConnection()) {
+        try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
                     "Delete from clips " +
@@ -226,9 +217,15 @@ public class ClipDAO implements IDAO<Clip> {
             //Close conn
             conn.close();
         }
-        catch(Exception ex){
+        catch(SQLException sqlex){
+            LOGGER.log(Level.WARNING,"SQLException: ",sqlex);
             return false;
         }
+        catch (Exception ex){
+            LOGGER.log(Level.WARNING,"Exception: ",ex);
+            return false;
+        }
+        LOGGER.log(Level.INFO,"Method delete() was executed successfully!");
         return true;
     }
 }

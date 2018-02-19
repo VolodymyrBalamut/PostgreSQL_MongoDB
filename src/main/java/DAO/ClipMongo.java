@@ -9,58 +9,39 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
+import static Connection.MongoConn.getCollection;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 public class ClipMongo implements IDAO<Clip> {
 
 
-    public static MongoCollection<Document> logsCollection;
-
-    public static void getCollection(){
-        MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
-        MongoDatabase database = mongoClient.getDatabase("MusicHub");
-        MongoCollection<Document> collection = database.getCollection("clips");
-        logsCollection = collection;
-    }
+    public static MongoCollection<Document> logsCollection = getCollection();
 
     @Override
     public List<Clip> findAll() {
-        List<Clip> list = new ArrayList<>();
-        FindIterable<Document> coll = logsCollection.find();
-        for(Document doc : coll){
-            Clip clip = new Clip();
-            clip.setId(doc.getInteger("id"));
-            clip.setName(doc.getString("name"));
-            clip.setUrl(doc.getString("url"));
-            clip.setStyle_id(doc.getInteger("style_id"));
-            clip.setPerformer_id(doc.getInteger("performer_id"));
-            list.add(clip);
-        }
-        return list;
+        //FindIterable<Document> coll = logsCollection.find();
+        return fillList(logsCollection.find());
     }
 
     @Override
     public List<Clip> findById(int id) {
-        List<Clip> list = new ArrayList<>();
-        FindIterable<Document> coll = logsCollection.find(eq("id", id));
-        for(Document doc : coll){
-            Clip clip = new Clip();
-            clip.setId(doc.getInteger("id"));
-            clip.setName(doc.getString("name"));
-            clip.setUrl(doc.getString("url"));
-            clip.setStyle_id(doc.getInteger("style_id"));
-            clip.setPerformer_id(doc.getInteger("performer_id"));
-            list.add(clip);
-        }
-        return list;
+        //FindIterable<Document> coll = logsCollection.find(eq("id", id));
+        return fillList(logsCollection.find(eq("id", id)));
     }
 
     @Override
     public List<Clip> findByName(String name) {
+
+        //FindIterable<Document> coll = logsCollection.find(eq("name", name));
+        return fillList(logsCollection.find(eq("name", name)));
+    }
+
+    private List<Clip> fillList(FindIterable<Document> coll){
         List<Clip> list = new ArrayList<>();
-        FindIterable<Document> coll = logsCollection.find(eq("name", name));
         for(Document doc : coll){
             Clip clip = new Clip();
             clip.setId(doc.getInteger("id"));
@@ -83,9 +64,10 @@ public class ClipMongo implements IDAO<Clip> {
                     .append("style_id",obj.getStyle_id());
             logsCollection.insertOne(doc);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.WARNING,"Exception: ",e);
             return false;
         }
+        LOGGER.log(Level.INFO,"Method insert() was executed successfully!");
         return true;
     }
 
@@ -99,9 +81,10 @@ public class ClipMongo implements IDAO<Clip> {
                     .append("style_id",obj.getStyle_id());
             logsCollection.updateOne(eq("id", obj.getId()), new Document("$set", doc));;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.WARNING,"Exception: ",e);
             return false;
         }
+        LOGGER.log(Level.INFO,"Method update() was executed successfully!");
         return true;
     }
 
@@ -110,8 +93,10 @@ public class ClipMongo implements IDAO<Clip> {
         Document doc = logsCollection.find(eq("id", obj.getId())).first();
         if(!doc.isEmpty()) {
             logsCollection.deleteOne(doc);
+            LOGGER.log(Level.INFO,"Method delete() was executed successfully!");
             return true;
         }
+        LOGGER.log(Level.WARNING,"Clip with this id not found!");
         return false;
     }
 }

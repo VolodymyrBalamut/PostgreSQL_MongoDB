@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.util.List;
 
+import static Connection.PostrgreSQLConn.getConnection;
 import static org.junit.Assert.*;
 
 public class ClipDAOTest {
@@ -15,7 +16,7 @@ public class ClipDAOTest {
     public void testGetConn(){
         Connection conn = null;
         try {
-            conn = ClipDAO.getConnection();
+            conn = getConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
