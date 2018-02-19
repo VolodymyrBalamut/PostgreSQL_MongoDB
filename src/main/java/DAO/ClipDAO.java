@@ -58,7 +58,6 @@ public class ClipDAO implements IDAO<Clip> {
             PreparedStatement st = conn.prepareStatement(
                     "Select * from clips "+
                         "Where id = ?");
-
             //Set values of parameters
             st.setInt(1, id);
             //Execute query
