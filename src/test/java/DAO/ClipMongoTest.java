@@ -1,7 +1,7 @@
 package DAO;
 
 import Connection.MongoConn;
-import Model.Clip;
+import domain.Clip;
 
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
@@ -20,7 +20,7 @@ public class ClipMongoTest {
 
     @Test
     public void getCollection() {
-        MongoCollection<Document> coll = MongoConn.getCollection();
+        MongoCollection<Document> coll = MongoConn.getCollection("clips");
         assertTrue((coll != null ? true : false) == true);
     }
 

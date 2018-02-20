@@ -1,6 +1,6 @@
 package DAO;
 
-import Model.Clip;
+import domain.Clip;
 import org.junit.Test;
 
 import java.sql.Connection;

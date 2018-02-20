@@ -1,5 +1,5 @@
 package DAO;
-import Model.Clip;
+import domain.Clip;
 
 import java.sql.*;
 import java.util.ArrayList;

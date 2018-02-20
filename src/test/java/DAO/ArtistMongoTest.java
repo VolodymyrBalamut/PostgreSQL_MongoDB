@@ -1,11 +1,7 @@
 package DAO;
 
-import Connection.MongoConn;
-import Model.Artist;
-import Model.Clip;
+import domain.Artist;
 
-import com.mongodb.client.MongoCollection;
-import org.bson.Document;
 import org.junit.Test;
 import java.util.List;
 
@@ -14,6 +10,9 @@ import static org.junit.Assert.*;
 public class ArtistMongoTest {
     public ArtistMongo artistMongo;
 
+    public ArtistMongoTest(){
+        artistMongo = new ArtistMongo();
+    }
 
     @Test
     public void insert() {

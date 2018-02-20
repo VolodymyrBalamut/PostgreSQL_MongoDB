@@ -1,5 +1,5 @@
 package DAO;
-import Model.Style;
+import domain.Style;
 
 import java.sql.*;
 import java.util.ArrayList;

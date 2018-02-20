@@ -1,6 +1,6 @@
 package DAO;
 
-import Model.Style;
+import domain.Style;
 
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;

@@ -1,6 +1,6 @@
 package DAO;
 
-import Model.Style;
+import domain.Style;
 import org.junit.Test;
 
 import java.sql.Connection;
