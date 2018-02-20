@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.Mongo.ArtistMongo;
 import domain.Artist;
 
 import org.junit.Test;

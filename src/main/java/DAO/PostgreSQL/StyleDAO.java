@@ -1,43 +1,42 @@
-package DAO;
-import domain.Clip;
+package DAO.PostgreSQL;
+import DAO.IDAO;
+import domain.Style;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-
 import static Connection.PostrgreSQLConn.getConnection;
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
-public class ClipDAO implements IDAO<Clip> {
+
+public class StyleDAO implements IDAO<Style> {
 
     @Override
-    public List<Clip> findAll() {
-        List<Clip> clips = new ArrayList<Clip>();
+    public List<Style> findAll() {
+        List<Style> styles = new ArrayList<Style>();
         //Get connection with DB
         try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
-                    "Select * from clips ");
+                    "Select * from styles ");
 
             //Execute query
             ResultSet rs = st.executeQuery();
 
-            Clip clip = null;
+            Style style = null;
             while (rs.next()) {
-                clip = new Clip(
+                style = new Style(
                         rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getInt(5));
-                clips.add(clip);
+                        rs.getString(3));
+                styles.add(style);
             }
             rs.close();
             conn.close();
             LOGGER.log(Level.INFO,"Method findAll() was executed successfully!");
-            return clips;
+            return styles;
         }
         catch(SQLException sqlex){
             LOGGER.log(Level.WARNING,"SQLException: ",sqlex);
@@ -50,33 +49,32 @@ public class ClipDAO implements IDAO<Clip> {
     }
 
     @Override
-    public List<Clip> findById(int id) {
-        List<Clip> clips = new ArrayList<Clip>();
+    public List<Style> findById(int id) {
+        List<Style> styles = new ArrayList<Style>();
         //Get connection with DB
         try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
-                    "Select * from clips "+
-                        "Where id = ?");
+                    "Select * from styles "+
+                            "Where id = ?");
+
             //Set values of parameters
             st.setInt(1, id);
             //Execute query
             ResultSet rs = st.executeQuery();
 
-            Clip clip = null;
+            Style style = null;
             while (rs.next()) {
-                clip = new Clip(
+                style = new Style(
                         rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getInt(5));
-                clips.add(clip);
+                        rs.getString(3));
+                styles.add(style);
             }
             rs.close();
             conn.close();
             LOGGER.log(Level.INFO,"Method findById() was executed successfully!");
-            return clips;
+            return styles;
         }
         catch(SQLException sqlex){
             LOGGER.log(Level.WARNING,"SQLException: ",sqlex);
@@ -89,13 +87,13 @@ public class ClipDAO implements IDAO<Clip> {
     }
 
     @Override
-    public List<Clip> findByName(String name) {
-        List<Clip> clips = new ArrayList<Clip>();
+    public List<Style> findByName(String name) {
+        List<Style> styles = new ArrayList<Style>();
         //Get connection with DB
         try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
-                    "Select * from clips "+
+                    "Select * from styles "+
                             "Where name = ?");
 
             //Set values of parameters
@@ -103,20 +101,18 @@ public class ClipDAO implements IDAO<Clip> {
             //Execute query
             ResultSet rs = st.executeQuery();
 
-            Clip clip = null;
+            Style style = null;
             while (rs.next()) {
-                clip = new Clip(
+                style = new Style(
                         rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getInt(5));
-                clips.add(clip);
+                        rs.getString(3));
+                styles.add(style);
             }
             rs.close();
             conn.close();
             LOGGER.log(Level.INFO,"Method findByName() was executed successfully!");
-            return clips;
+            return styles;
         }
         catch(SQLException sqlex){
             LOGGER.log(Level.WARNING,"SQLException: ",sqlex);
@@ -129,21 +125,19 @@ public class ClipDAO implements IDAO<Clip> {
     }
 
     @Override
-    public boolean insert(Clip obj){
+    public boolean insert(Style obj){
         //Get connection with DB
         try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
-                    "Insert into clips " +
-                            "(name, url, performer_id, style_id) " +
-                            "values ( ?, ?, ?, ?)");
+                    "Insert into styles " +
+                            "(name, description) " +
+                            "values ( ?, ?)");
 
             //Set values of parameters
             //st.setInt(1, obj.getId());
             st.setString(1, obj.getName());
-            st.setString(2, obj.getUrl());
-            st.setInt(3, obj.getPerformer_id());
-            st.setInt(4, obj.getStyle_id());
+            st.setString(2, obj.getDescription());
 
             //Execute query
             st.executeUpdate();
@@ -164,21 +158,19 @@ public class ClipDAO implements IDAO<Clip> {
     }
 
     @Override
-    public boolean update(Clip obj) {
+    public boolean update(Style obj) {
         //Get connection with DB
         try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
-                    "Update clips " +
-                            "Set name = ?, url =?, performer_id = ?, style_id = ? " +
+                    "Update styles " +
+                            "Set name = ?,description =?" +
                             "Where id = ?");
 
             //Set values of parameters
             st.setString(1, obj.getName());
-            st.setString(2, obj.getUrl());
-            st.setInt(3, obj.getPerformer_id());
-            st.setInt(4, obj.getStyle_id());
-            st.setInt(5, obj.getId());
+            st.setString(2, obj.getDescription());
+            st.setInt(3, obj.getId());
 
             //Execute query
             st.executeUpdate();
@@ -199,12 +191,12 @@ public class ClipDAO implements IDAO<Clip> {
     }
 
     @Override
-    public boolean delete(Clip obj) {
+    public boolean delete(Style obj) {
         //Get connection with DB
         try (Connection conn = getConnection()) {
             //Prepared sql statement
             PreparedStatement st = conn.prepareStatement(
-                    "Delete from clips " +
+                    "Delete from styles " +
                             "Where id = ?");
 
             //Set values of parameters

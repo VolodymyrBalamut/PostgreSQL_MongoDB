@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.Mongo.StyleMongo;
 import domain.Style;
 
 import com.mongodb.client.MongoCollection;

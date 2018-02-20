@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.PostgreSQL.ClipDAO;
 import domain.Clip;
 import org.junit.Test;
 

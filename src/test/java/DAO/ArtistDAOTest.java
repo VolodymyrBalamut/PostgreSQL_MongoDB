@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.PostgreSQL.ArtistDAO;
 import domain.Artist;
 import org.junit.Test;
 

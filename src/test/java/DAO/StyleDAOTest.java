@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.PostgreSQL.StyleDAO;
 import domain.Style;
 import org.junit.Test;
 

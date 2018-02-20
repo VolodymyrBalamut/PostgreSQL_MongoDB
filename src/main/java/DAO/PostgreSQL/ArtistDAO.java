@@ -1,4 +1,5 @@
-package DAO;
+package DAO.PostgreSQL;
+import DAO.IDAO;
 import domain.Artist;
 
 import java.sql.*;

@@ -1,6 +1,7 @@
 package DAO;
 
 import Connection.MongoConn;
+import DAO.Mongo.ClipMongo;
 import domain.Clip;
 
 import com.mongodb.client.MongoCollection;

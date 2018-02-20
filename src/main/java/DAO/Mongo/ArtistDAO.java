@@ -1,6 +1,7 @@
-package DAO;
+package DAO.Mongo;
 
-import domain.Clip;
+import DAO.IDAO;
+import domain.Artist;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
@@ -14,52 +15,49 @@ import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
-public class ClipMongo implements IDAO<Clip> {
+public class ArtistMongo implements IDAO<Artist> {
 
-
-    public static MongoCollection<Document> logsCollection = getCollection("clips");
+    public static MongoCollection<Document> logsCollection = getCollection("artists");
 
     @Override
-    public List<Clip> findAll() {
+    public List<Artist> findAll() {
         //FindIterable<Document> coll = logsCollection.find();
         return fillList(logsCollection.find());
     }
 
     @Override
-    public List<Clip> findById(int id) {
+    public List<Artist> findById(int id) {
         //FindIterable<Document> coll = logsCollection.find(eq("id", id));
         return fillList(logsCollection.find(eq("id", id)));
     }
 
     @Override
-    public List<Clip> findByName(String name) {
+    public List<Artist> findByName(String name) {
 
         //FindIterable<Document> coll = logsCollection.find(eq("name", name));
         return fillList(logsCollection.find(eq("name", name)));
     }
 
-    private List<Clip> fillList(FindIterable<Document> coll){
-        List<Clip> list = new ArrayList<>();
+    private List<Artist> fillList(FindIterable<Document> coll){
+        List<Artist> list = new ArrayList<>();
         for(Document doc : coll){
-            Clip clip = new Clip();
-            clip.setId(doc.getInteger("id"));
-            clip.setName(doc.getString("name"));
-            clip.setUrl(doc.getString("url"));
-            clip.setStyle_id(doc.getInteger("style_id"));
-            clip.setPerformer_id(doc.getInteger("performer_id"));
-            list.add(clip);
+            Artist artist = new Artist();
+            artist.setId(doc.getInteger("id"));
+            artist.setName(doc.getString("name"));
+            artist.setBiography(doc.getString("biography"));
+            artist.setId_country(doc.getInteger("country_code"));
+            list.add(artist);
         }
         return list;
     }
 
     @Override
-    public boolean insert(Clip obj) {
+    public boolean insert(Artist obj) {
         try {
             Document doc = new Document("id", obj.getId())
                     .append("name", obj.getName())
-                    .append("url",obj.getUrl())
-                    .append("performer_id",obj.getPerformer_id())
-                    .append("style_id",obj.getStyle_id());
+                    .append("biography",obj.getBiography())
+                    .append("country_code",obj.getId_country());
             logsCollection.insertOne(doc);
         } catch (Exception e) {
             LOGGER.log(Level.WARNING,"Exception: ",e);
@@ -70,13 +68,12 @@ public class ClipMongo implements IDAO<Clip> {
     }
 
     @Override
-    public boolean update(Clip obj) {
+    public boolean update(Artist obj) {
         try {
             Document doc = new Document("id", obj.getId())
                     .append("name", obj.getName())
-                    .append("url",obj.getUrl())
-                    .append("performer_id",obj.getPerformer_id())
-                    .append("style_id",obj.getStyle_id());
+                    .append("biography",obj.getBiography())
+                    .append("country_code",obj.getId_country());
             logsCollection.updateOne(eq("id", obj.getId()), new Document("$set", doc));;
         } catch (Exception e) {
             LOGGER.log(Level.WARNING,"Exception: ",e);
@@ -87,7 +84,7 @@ public class ClipMongo implements IDAO<Clip> {
     }
 
     @Override
-    public boolean delete(Clip obj) {
+    public boolean delete(Artist obj) {
         Document doc = logsCollection.find(eq("id", obj.getId())).first();
         if(!doc.isEmpty()) {
             logsCollection.deleteOne(doc);
@@ -98,3 +95,5 @@ public class ClipMongo implements IDAO<Clip> {
         return false;
     }
 }
+
+
