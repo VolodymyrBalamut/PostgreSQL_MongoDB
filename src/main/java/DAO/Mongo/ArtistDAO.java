@@ -15,7 +15,7 @@ import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
-public class ArtistMongo implements IDAO<Artist> {
+public class ArtistDAO implements IDAO<Artist> {
 
     public static MongoCollection<Document> logsCollection = getCollection("artists");
 

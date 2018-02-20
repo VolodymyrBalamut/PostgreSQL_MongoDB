@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.util.List;
 
-import static Connection.PostrgreSQLConn.getConnection;
+import static Connection.PostgreSQLConn.getConnection;
 import static org.junit.Assert.*;
 
 public class StyleDAOTest {

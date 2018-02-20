@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 
-import static Connection.PostrgreSQLConn.getConnection;
+import static Connection.PostgreSQLConn.getConnection;
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 public class ClipDAO implements IDAO<Clip> {

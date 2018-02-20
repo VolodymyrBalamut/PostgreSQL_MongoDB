@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import static com.mongodb.client.model.Filters.eq;
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
-public class StyleMongo implements IDAO<Style> {
+public class StyleDAO implements IDAO<Style> {
 
 
     public static MongoCollection<Document> logsCollection;

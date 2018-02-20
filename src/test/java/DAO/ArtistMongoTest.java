@@ -1,6 +1,6 @@
 package DAO;
 
-import DAO.Mongo.ArtistMongo;
+import DAO.Mongo.ArtistDAO;
 import domain.Artist;
 
 import org.junit.Test;
@@ -9,10 +9,10 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ArtistMongoTest {
-    public ArtistMongo artistMongo;
+    public ArtistDAO artistMongo;
 
     public ArtistMongoTest(){
-        artistMongo = new ArtistMongo();
+        artistMongo = new ArtistDAO();
     }
 
     @Test

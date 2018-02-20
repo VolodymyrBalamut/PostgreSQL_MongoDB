@@ -1,6 +1,6 @@
 package DAO;
 
-import DAO.Mongo.StyleMongo;
+import DAO.Mongo.StyleDAO;
 import domain.Style;
 
 import com.mongodb.client.MongoCollection;
@@ -12,15 +12,15 @@ import static org.junit.Assert.*;
 
 public class StyleMongoTest {
 
-    public StyleMongo styleMongo;
+    public StyleDAO styleMongo;
 
     public StyleMongoTest(){
-        styleMongo = new StyleMongo();
+        styleMongo = new StyleDAO();
     }
 
     @Test
     public void getCollection() {
-        MongoCollection<Document> coll = StyleMongo.getCollection();
+        MongoCollection<Document> coll = StyleDAO.getCollection();
         assertTrue((coll != null ? true : false) == true);
     }
 

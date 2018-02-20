@@ -1,7 +1,7 @@
 package DAO;
 
 import Connection.MongoConn;
-import DAO.Mongo.ClipMongo;
+import DAO.Mongo.ClipDAO;
 import domain.Clip;
 
 import com.mongodb.client.MongoCollection;
@@ -13,10 +13,10 @@ import static org.junit.Assert.*;
 
 public class ClipMongoTest {
 
-    public ClipMongo clipMongo;
+    public ClipDAO clipMongo;
 
     public ClipMongoTest(){
-        clipMongo = new ClipMongo();
+        clipMongo = new ClipDAO();
     }
 
     @Test

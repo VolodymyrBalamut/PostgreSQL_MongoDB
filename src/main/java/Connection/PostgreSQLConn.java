@@ -9,7 +9,7 @@ import java.util.logging.Level;
 
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
-public class PostrgreSQLConn {
+public class PostgreSQLConn {
 
     public static Connection getConnection() throws Exception {
         System.out.println("-------- PostgreSQL "

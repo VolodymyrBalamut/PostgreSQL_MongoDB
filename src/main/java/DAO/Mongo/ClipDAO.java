@@ -15,7 +15,7 @@ import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
-public class ClipMongo implements IDAO<Clip> {
+public class ClipDAO implements IDAO<Clip> {
 
 
     public static MongoCollection<Document> logsCollection = getCollection("clips");
