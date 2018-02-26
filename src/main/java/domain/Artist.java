@@ -8,11 +8,17 @@ public class Artist
     private int id;
     private String name;
     private String biography;
-    private int country_code;
+    private String country_code;
 
     public Artist() { }
 
-    public Artist(int id, String name, String biography, int country_code)
+    public Artist(String name, String biography, String country_code) {
+        this.name = name;
+        this.biography = biography;
+        this.country_code = country_code;
+    }
+
+    public Artist(int id, String name, String biography, String country_code)
     {
         this.id = id;
         this.name = name;
@@ -44,11 +50,11 @@ public class Artist
         this.biography = biography;
     }
 
-    public int getId_country() {
+    public String getId_country() {
         return country_code;
     }
 
-    public void setId_country(int country_code) {
+    public void setId_country(String country_code) {
         this.country_code = country_code;
     }
 }

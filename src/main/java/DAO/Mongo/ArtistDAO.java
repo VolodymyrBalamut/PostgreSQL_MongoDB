@@ -45,7 +45,7 @@ public class ArtistDAO implements IDAO<Artist> {
             artist.setId(doc.getInteger("id"));
             artist.setName(doc.getString("name"));
             artist.setBiography(doc.getString("biography"));
-            artist.setId_country(doc.getInteger("country_code"));
+            artist.setId_country(doc.getString("country_code"));
             list.add(artist);
         }
         return list;

@@ -68,7 +68,7 @@ public class ArtistDAO implements IDAO<Artist> {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4));
+                        rs.getString(4));
                 artists.add(artist);
             }
             rs.close();
@@ -101,7 +101,7 @@ public class ArtistDAO implements IDAO<Artist> {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4));
+                        rs.getString(4));
                 artists.add(artist);
             }
             rs.close();
@@ -134,7 +134,7 @@ public class ArtistDAO implements IDAO<Artist> {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4));
+                        rs.getString(4));
                 artists.add(artist);
             }
             rs.close();
@@ -160,7 +160,7 @@ public class ArtistDAO implements IDAO<Artist> {
             //st.setInt(1, obj.getId());
             st.setString(1, obj.getName());
             st.setString(2, obj.getBiography());
-            st.setInt(3, obj.getId_country());
+            st.setString(3, obj.getId_country());
             //Execute query
             st.executeUpdate();
 
@@ -186,7 +186,7 @@ public class ArtistDAO implements IDAO<Artist> {
             //Set values of parameters
             st.setString(1, obj.getName());
             st.setString(2, obj.getBiography());
-            st.setInt(3, obj.getId_country());
+            st.setString(3, obj.getId_country());
             st.setInt(4, obj.getId());
 
             //Execute query

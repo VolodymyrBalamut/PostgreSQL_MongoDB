@@ -1,4 +1,4 @@
-package DAO;
+package DAO.PostgreSQL;
 
 import DAO.PostgreSQL.ClipDAO;
 import domain.Clip;
@@ -27,7 +27,7 @@ public class ClipDAOTest {
 
     @Test
     public void testInsert(){
-        Clip clip = new Clip(1,"Barking","fdfdfs",1,1);
+        Clip clip = new Clip("NEW","fdfdfs",1,1);
         ClipDAO clipDAO = new ClipDAO();
         assertTrue(clipDAO.insert(clip) == true);
     }

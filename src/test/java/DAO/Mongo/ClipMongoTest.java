@@ -1,4 +1,4 @@
-package DAO;
+package DAO.Mongo;
 
 import Connection.MongoConn;
 import DAO.Mongo.ClipDAO;
